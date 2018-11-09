@@ -8,7 +8,48 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Page.DataContext>
+        <local:ViewModel/>
+    </Page.DataContext>
 
+    <Grid>
+        <StackPanel>
+            <ListView ItemsSource="{Binding Path = Books}" SelectedItem="{Binding Path = SelectedBook, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}"></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="11" Text="Udlånt til: "></TextBlock>
+                                <TextBlock FontSize="11" Text="{Binding Loaner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <MenuFlyoutSeparator></MenuFlyoutSeparator>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Title: " HorizontalAlignment="Stretch" Margin="0,0,8.8,0" VerticalAlignment="Stretch"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="ExtraBold" Text="{Binding SelectedBook.Title}" HorizontalAlignment="Stretch" Margin="3.2,0,0,0" VerticalAlignment="Stretch"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Author: " HorizontalAlignment="Stretch" Margin="0,0,8.8,0" VerticalAlignment="Stretch"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" FontStyle="Italic" Text="{Binding SelectedBook.Author}" HorizontalAlignment="Stretch" Margin="3.2,0,0,0" VerticalAlignment="Stretch"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="ISBN: " HorizontalAlignment="Stretch" Margin="0,0,8.8,0" VerticalAlignment="Stretch"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SelectedBook.Isbn}" HorizontalAlignment="Stretch" Margin="3.2,0,0,0" VerticalAlignment="Stretch"></TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Loaner, Mode=TwoWay}"></TextBox>
+                <Button Grid.Row="3" Content="Udlån bog" HorizontalAlignment="Center" Height="33" Margin="0,0,0,0" VerticalAlignment="Center" Width="90" Command="{Binding AddLoanerToBook, Mode=TwoWay}"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>
